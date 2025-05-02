@@ -20,8 +20,6 @@
       <el-form-item label="Problem Type" prop="problem_type" :rules="[{ required: true, message: 'Type is required' }]">
         <el-select v-model="form.problem_type" placeholder="Select type">
           <el-option label="std" value="std" />
-<!--          <el-option label="Data Structure" value="data_structure" />-->
-<!--          <el-option label="Math" value="math" />-->
         </el-select>
       </el-form-item>
       <el-form-item label="Time Limit (s)" prop="time_limit" :rules="[{ required: true, message: 'Time limit is required' }]">
