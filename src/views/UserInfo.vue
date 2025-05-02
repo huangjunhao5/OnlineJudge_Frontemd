@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from '@/request/base.ts';
 import { ElMessage } from 'element-plus';
 import {getCookie} from "@/lib/cookie.js";
@@ -54,7 +54,7 @@ const roles = ref([]);
 
 
 const openNewQuestion = () => window.open('/problems/new', '_blank');
-const openUserManagement = () => {} //  window.open('/users/manage', '_blank');
+const openUserManagement = () =>  window.open('/users/manage', '_blank');
 
 const formatDate = iso => new Date(iso).toLocaleString();
 
@@ -115,9 +115,6 @@ onMounted(() => {
   font-size: 36px;
 }
 
-.float-right {
-  float: right;
-}
 .header h2 {
   margin: 0 0 16px;
 }

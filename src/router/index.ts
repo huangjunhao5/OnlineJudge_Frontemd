@@ -9,6 +9,7 @@ import SubmissionList from "@/views/SubmissionList.vue";
 import SubmissionDetail from "@/views/SubmissionDetail.vue";
 import EditProblem from "@/views/EditProblem.vue";
 import CreateProblem from "@/views/CreateProblem.vue";
+import UserManage from "@/views/UserManage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,6 +72,11 @@ const router = createRouter({
       component: EditProblem,
       props: true
     },
+    {
+      path: '/users/manage',
+      name: 'UserManage',
+      component: UserManage
+    }
   ],
 })
 
