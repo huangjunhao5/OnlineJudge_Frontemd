@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProblemDetail from "@/views/ProblemDetail.vue";
 import Login from "@/views/Login.vue";
@@ -7,6 +7,8 @@ import ProblemList from "@/views/ProblemList.vue";
 import UserInfo from "@/views/UserInfo.vue";
 import SubmissionList from "@/views/SubmissionList.vue";
 import SubmissionDetail from "@/views/SubmissionDetail.vue";
+import EditProblem from "@/views/EditProblem.vue";
+import CreateProblem from "@/views/CreateProblem.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,7 +61,16 @@ const router = createRouter({
       path: '/submissions/:id',
       name: 'SubmissionDetail',
       component: SubmissionDetail
-    }
+    },
+    {
+      path: '/problems/new',
+      component: CreateProblem
+    },
+    {
+      path: '/problems/:id/edit',
+      component: EditProblem,
+      props: true
+    },
   ],
 })
 

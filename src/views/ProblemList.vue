@@ -11,7 +11,7 @@
         label="ID"
       >
         <template #default="{ row }">
-          <router-link :to="`/problems/${row.id}`" class="el-table-problem-list">{{ row.id }}</router-link>
+          <router-link :to="`/problems/${row.id}`" class="el-table-problem-list route-link">{{ row.id }}</router-link>
         </template>
       </el-table-column>
 
@@ -21,7 +21,7 @@
         label="Title"
       >
         <template #default="{ row }">
-          <router-link :to="`/problems/${row.id}`" class="el-table-problem-list">{{ row.title }}</router-link>
+          <router-link :to="`/problems/${row.id}`" class="el-table-problem-list route-link">{{ row.title }}</router-link>
         </template>
       </el-table-column>
 
@@ -34,12 +34,21 @@
           <el-tag
             v-for="tag in row.tags"
             :key="tag"
-            type="info"
+            type="primary"
             size="large"
             style="margin-right: 4px;"
           >
             {{ tag }}
           </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column v-if="isAdmin">
+        <!-- 自定义表头 -->
+        <template #header="{ column }">
+          <el-button type="success" @click="createProblem" class="new-problem">新建题目</el-button>
+        </template>
+        <template #default="{ row }">
+          <el-button type="primary" @click="editProblem(row.id)">修改题目</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,6 +71,7 @@
 import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from '@/request/base.ts'
+import {hasAdminPermission} from "@/lib/role.js";
 
 const route = useRoute()
 const router = useRouter()
@@ -72,7 +82,18 @@ const pageSize = 10 // 固定每页条数
 const total = ref(0)
 const problems = ref([])
 const loading = ref(false)
+const isAdmin = ref(false)
+const roles = ref([]);
 
+const fetchRoles = async () => {
+  try {
+    const res = await axios.get('/api/auth/roles');
+    roles.value = res.data.roles;
+    isAdmin.value = hasAdminPermission(roles)
+  } catch (err) {
+    // ElMessage.error('获取用户角色失败');
+  }
+};
 // 拉取数据
 async function fetchProblems() {
   loading.value = true
@@ -112,7 +133,18 @@ function onPageChange(newPage) {
   })
 }
 
-onMounted(fetchProblems)
+function editProblem(problem_id){
+  router.push(`/problems/${problem_id}/edit`)
+}
+
+function createProblem(){
+  router.push(`/problems/new`)
+}
+
+onMounted(() => {
+  fetchRoles()
+  fetchProblems()
+})
 </script>
 
 <style scoped>
@@ -120,4 +152,11 @@ onMounted(fetchProblems)
 .el-table-problem-list{
   color: var(--color-heading);
 }
+
+.route-link{
+  text-decoration: underline;
+}
+
+
+
 </style>

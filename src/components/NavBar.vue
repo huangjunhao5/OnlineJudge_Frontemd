@@ -59,7 +59,7 @@ function logout() {
   userStore.clearUser()
   token.value = ''
   username.value = ''
-  router.push('/login')
+  window.location.reload()
 }
 
 // 点击菜单项

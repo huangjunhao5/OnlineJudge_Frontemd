@@ -112,7 +112,7 @@ onMounted(() => {
         label="ID"
       >
         <template #default="{ row }">
-          <router-link :to="`/submissions/${row.id}`" class="el-table-problem-list">{{ row.id }}</router-link>
+          <router-link :to="`/submissions/${row.id}`" class="el-table-problem-list route-link">{{ row.id }}</router-link>
         </template>
       </el-table-column>
 
@@ -122,7 +122,7 @@ onMounted(() => {
         label="problem"
       >
         <template #default="{ row }">
-          <router-link :to="`/problems/${row.problem_id}`" class="el-table-problem-list">
+          <router-link :to="`/problems/${row.problem_id}`" class="el-table-problem-list route-link">
             {{ problemTitle.get(row.problem_id) }}
           </router-link>
         </template>
@@ -186,4 +186,9 @@ onMounted(() => {
 .el-table-problem-list{
   color: var(--color-heading);
 }
+
+.route-link{
+  text-decoration: underline;
+}
+
 </style>

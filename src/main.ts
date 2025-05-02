@@ -5,8 +5,9 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import ElementPlus from 'element-plus';
+import ElementPlus, {ElIcon} from 'element-plus';
 import Markdown from 'vue3-markdown-it';
+import * as Icons from '@element-plus/icons-vue'
 
 import backend from '@/request/base.ts'
 
@@ -33,6 +34,12 @@ app.provide('axios', backend)
 app.use(createPinia())
 app.use(router)
 app.use(ElementPlus, {} as any)
+// 注册容器
+app.component(<string>ElIcon.name, ElIcon)
+// 注册所有图标
+Object.entries(Icons).forEach(([name, component]) => {
+  app.component(name, component)
+})
 app.use(Markdown)
 
 app.mount('#app')

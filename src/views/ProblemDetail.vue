@@ -26,23 +26,29 @@
 
       <!-- Samples -->
       <el-card v-if="problem.samples.length" shadow="hover" class="mb-6">
-        <h2 class="text-2xl font-medium mb-4">Samples</h2>
-        <div v-for="sample in problem.samples" :key="sample.id" class="mb-4">
-          <el-row :gutter="16">
-            <el-col :span="12">
+        <h2 class="text-2xl font-medium mb-4" style="padding-bottom: 0.5em;">Samples</h2>
+        <el-row>
+          <el-col
+            v-for="(sample, index) in problem.samples"
+            :key="sample.id"
+            class="mb-4"
+            :span="10"
+            style="padding: 1em"
+          >
+            <el-card :gutter="16">
+              <h3 class="text-2xl font-medium mb-4" style="padding-bottom: 1em;">样例{{index + 1}}</h3>
               <el-card>
                 <div slot="header"><strong>Input</strong></div>
                 <pre class="whitespace-pre-wrap font-mono">{{ sample.input }}</pre>
               </el-card>
-            </el-col>
-            <el-col :span="12">
               <el-card>
                 <div slot="header"><strong>Output</strong></div>
                 <pre class="whitespace-pre-wrap font-mono">{{ sample.output }}</pre>
               </el-card>
-            </el-col>
-          </el-row>
-        </div>
+            </el-card>
+          </el-col>
+        </el-row>
+
       </el-card>
 
       <!-- Submission Box -->
@@ -78,25 +84,25 @@
     <!-- Fixed Sidebar -->
     <aside class="sidebar bg-white border-l p-6">
       <el-card shadow="never">
-        <div class="mb-4">
+        <div class="mb-4 info">
           <h3 class="text-lg font-semibold">Problem Type</h3>
           <p>{{ problem.problem_type }}</p>
         </div>
-        <div class="mb-4">
+        <div class="mb-4 info">
           <h3 class="text-lg font-semibold">Time Limit</h3>
           <p>{{ problem.time_limit }} s</p>
         </div>
-        <div class="mb-4">
+        <div class="mb-4 info">
           <h3 class="text-lg font-semibold">Memory Limit</h3>
           <p>{{ problem.memory_limit }} MB</p>
         </div>
-        <div v-if="problem.tags.length">
+        <div v-if="problem.tags.length" class="info">
           <h3 class="text-lg font-semibold mb-2">Tags</h3>
           <el-tag
             v-for="tag in problem.tags"
             :key="tag.id"
             class="mr-2 mb-2"
-            type="info"
+            type="primary"
           >
             {{ tag.name }}
           </el-tag>
@@ -143,6 +149,7 @@ const fetchProblem = async () => {
   const { id } = route.params;
   try {
     const res = await axios.get(`/api/evaluate/problems/${id}`);
+    console.log(res)
     problem.value = res.data;
     rendered.value.description = md.render(problem.value.description);
     rendered.value.inputDesc = md.render(problem.value.input_desc);
@@ -184,6 +191,10 @@ onMounted(fetchProblem);
 <style scoped>
 .problem-detail {
   display: flex;
+}
+
+.info {
+  padding-bottom: 1em;
 }
 
 .content {
