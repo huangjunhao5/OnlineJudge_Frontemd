@@ -53,7 +53,7 @@ const user = ref({});
 const roles = ref([]);
 
 
-const openNewQuestion = () => window.open('/question/new', '_blank');
+const openNewQuestion = () => window.open('/problems/new', '_blank');
 const openUserManagement = () => {} //  window.open('/users/manage', '_blank');
 
 const formatDate = iso => new Date(iso).toLocaleString();
